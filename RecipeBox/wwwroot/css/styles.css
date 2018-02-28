@@ -1,0 +1,37 @@
+ body {
+   background-color: brown;
+   color: yellow;
+ }
+
+ a {
+   color: white;
+ }
+
+ .title {
+   text-align: center;
+ }
+a:hover {
+  color: yellow;
+}
+h1, h2 {;
+  color: white;
+}
+h2 {
+  text-align: left;
+
+}
+input {
+  color: black;
+}
+button {
+  color: black;
+}
+select {
+  color: black;
+}
+.index-cat {
+  text-align: left;
+}
+.index-rec {
+  text-align: right;
+}

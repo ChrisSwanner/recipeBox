@@ -1,0 +1,24 @@
+@{
+  Layout = "_Layout";
+}
+
+<h1>Add a new recipe</h1>
+<form action="/recipes" method="post">
+  <label for="recipe-name">Recipe name:</label>
+  <input id="recipe-name" name="recipe-name" type="text">
+  <label for="recipe-ingrdients">Recipe Ingredients:</label>
+  <input type="text" name="recipe-ingredients">
+  <label for="recipe-instructions">Recipe Instructions</label>
+  <input type="text" name="recipe-instructions">
+  <label for="recipe-rating">Recipe Rating (1-5)</label>
+  <select class="recipe-rating" name="recipe-rating">
+    <option value=1>1</option>
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+    <option value=5>5</option>
+  </select>
+  <button type="submit">Add new recipe</button>
+</form>
+<p><a href="/">Back home</a></p>
+<p><a href="/recipes">View all recipes</a></p>
