@@ -89,5 +89,68 @@ namespace RecipeBox.Tests
       //Assert
       Assert.AreEqual(firstRecipe, secondRecipe);
     }
+
+    [TestMethod]
+    public void AddCategory_AddsCategoryToRecipe_CategoryList()
+    {
+      //Arrange
+      Recipe testRecipe = new Recipe("Popplers", "Freshly laid Omikronian young", "Find fetal Omikronian, consume", 3);
+      testRecipe.Save();
+
+      Category testCategory = new Category("Future Foods");
+      testCategory.Save();
+
+      //Act
+      testRecipe.AddCategory(testCategory);
+
+      List<Category> result = testRecipe.GetCategories();
+      List<Category> testList = new List<Category>{testCategory};
+
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
+
+    [TestMethod]
+    public void GetCategories_ReturnsAllRecipeCategories_CategoryList()
+    {
+      //Arrange
+      Recipe testRecipe = new Recipe("Popplers", "Freshly laid Omikronian young", "Find fetal Omikronian, consume", 3);
+      testRecipe.Save();
+
+      Category testCategory1 = new Category("Home stuff");
+      testCategory1.Save();
+
+      Category testCategory2 = new Category("Work stuff");
+      testCategory2.Save();
+
+      //Act
+      testRecipe.AddCategory(testCategory1);
+      List<Category> result = testRecipe.GetCategories();
+      List<Category> testList = new List<Category> {testCategory1};
+
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
+
+    [TestMethod]
+    public void Delete_DeletesRecipeAssociationsFromDatabase_RecipeList()
+    {
+      //Arrange
+      Category testCategory = new Category("Home stuff");
+      testCategory.Save();
+
+      Recipe testRecipe = new Recipe("Popplers", "Freshly laid Omikronian young", "Find fetal Omikronian, consume", 3);
+      testRecipe.Save();
+
+      //Act
+      testRecipe.AddCategory(testCategory);
+      testRecipe.Delete();
+
+      List<Recipe> resultCategoryRecipes = testCategory.GetRecipes();
+      List<Recipe> testCategoryRecipes = new List<Recipe> {};
+
+      //Assert
+      CollectionAssert.AreEqual(testCategoryRecipes, resultCategoryRecipes);
+    }
   }
 }
