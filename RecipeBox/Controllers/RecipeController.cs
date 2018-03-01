@@ -67,9 +67,15 @@ namespace RecipeBox.Controllers
      [HttpPost("/recipes/{id}/update")]
      public ActionResult UpdateItem(int id)
      {
+       Dictionary<string, object> model = new Dictionary<string, object>();
        Recipe thisRecipe = Recipe.Find(id);
-       thisRecipe.Edit(Request.Form["new-ingredient"]);
-       return View("Details", thisRecipe);
+       thisRecipe.Edit(Request.Form["new-ingredients"]);
+       List<Category> recipeCategories = thisRecipe.GetCategories();
+       List<Category> allCategories = Category.GetAll();
+       model.Add("selectedRecipe", thisRecipe);
+       model.Add("recipeCategories", recipeCategories);
+       model.Add("allCategories", allCategories);
+       return View("Details", model);
      }
   }
 }

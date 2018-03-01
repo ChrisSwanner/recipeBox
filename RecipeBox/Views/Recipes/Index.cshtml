@@ -9,9 +9,8 @@
   <ul>
     @foreach (var recipe in Model)
     {
-      <li><a href='/recipes/@recipe.GetId()'>@recipe.GetName()</a></li>
-      <p><a href="/recipes/@recipe.GetId()/delete">Delete Recipe</a></p>
-      <p><a href="/recipes/@recipe.GetId()/update">Update Recipe</a></p>
+      <li><h3><a href='/recipes/@recipe.GetId()'>@recipe.GetName()</a></h3><p><a href="/recipes/@recipe.GetId()/delete">Delete Recipe</a> | <a href="/recipes/@recipe.GetId()/update">Update Recipe</a></p></li>
+
     }
   </ul>
 }

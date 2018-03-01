@@ -189,6 +189,7 @@ namespace RecipeBox.Models
             }
             return allRecipes;
         }
+
         public static Recipe Find(int id)
         {
             MySqlConnection conn = DB.Connection();
@@ -224,6 +225,42 @@ namespace RecipeBox.Models
             }
             return newRecipe;
         }
+
+        // public static Recipe FindByIngredient(string ingredient)
+        // {
+        //     MySqlConnection conn = DB.Connection();
+        //     conn.Open();
+        //     var cmd = conn.CreateCommand() as MySqlCommand;
+        //     cmd.CommandText = @"SELECT * FROM recipes WHERE id = (@searchId);";
+        //
+        //     MySqlParameter searchId = new MySqlParameter();
+        //     searchId.ParameterName = "@searchId";
+        //     searchId.Value = id;
+        //     cmd.Parameters.Add(searchId);
+        //
+        //     var rdr = cmd.ExecuteReader() as MySqlDataReader;
+        //     int recipeId = 0;
+        //     string recipeName = "";
+        //     string recipeIngredients = "";
+        //     string recipeInstructions = "";
+        //     int recipeRating = 0;
+        //
+        //     while(rdr.Read())
+        //     {
+        //       recipeId = rdr.GetInt32(0);
+        //       recipeName = rdr.GetString(1);
+        //       recipeIngredients = rdr.GetString(2);
+        //       recipeInstructions = rdr.GetString(3);
+        //       recipeRating = rdr.GetInt32(4);
+        //     }
+        //     Recipe newRecipe = new Recipe(recipeName, recipeIngredients, recipeInstructions, recipeRating, recipeId);
+        //     conn.Close();
+        //     if (conn != null)
+        //     {
+        //         conn.Dispose();
+        //     }
+        //     return newRecipe;
+        // }
 
         public void Delete()
           {
