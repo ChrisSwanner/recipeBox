@@ -8,11 +8,13 @@ namespace RecipeBox.Models
     {
         private string _name;
         private int _id;
+
         public Category(string name, int id = 0)
         {
             _name = name;
             _id = id;
         }
+
         public override bool Equals(System.Object otherCategory)
         {
             if (!(otherCategory is Category))
@@ -25,18 +27,39 @@ namespace RecipeBox.Models
                 return this.GetId().Equals(newCategory.GetId());
             }
         }
+
+        public static void DeleteAll()
+        {
+          MySqlConnection conn = DB.Connection();
+          conn.Open();
+
+          var cmd = conn.CreateCommand() as MySqlCommand;
+          cmd.CommandText = @"DELETE FROM categories;";
+
+          cmd.ExecuteNonQuery();
+
+          conn.Close();
+          if (conn != null)
+          {
+            conn.Dispose();
+          }
+        }
+
         public override int GetHashCode()
         {
             return this.GetId().GetHashCode();
         }
+
         public string GetName()
         {
             return _name;
         }
+
         public int GetId()
         {
             return _id;
         }
+
         public void Save()
         {
             MySqlConnection conn = DB.Connection();
@@ -59,6 +82,7 @@ namespace RecipeBox.Models
             }
 
         }
+
         public static List<Category> GetAll()
         {
             List<Category> allCategories = new List<Category> {};
@@ -81,6 +105,7 @@ namespace RecipeBox.Models
             }
             return allCategories;
         }
+
         public static Category Find(int id)
         {
             MySqlConnection conn = DB.Connection();
@@ -102,12 +127,14 @@ namespace RecipeBox.Models
               CategoryId = rdr.GetInt32(0);
               CategoryName = rdr.GetString(1);
             }
+
             Category newCategory = new Category(CategoryName, CategoryId);
             conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
             }
+            
             return newCategory;
         }
 
@@ -135,6 +162,7 @@ namespace RecipeBox.Models
                 conn.Dispose();
             }
         }
+
         public void Delete()
         {
           MySqlConnection conn = DB.Connection();
