@@ -21,19 +21,32 @@ namespace RecipeBox.Models
             _id = id;
         }
 
+        public override bool Equals(System.Object otherRecipe)
+        {
+            if (!(otherRecipe is Recipe))
+            {
+                return false;
+            }
+            else
+            {
+                Recipe newRecipe = (Recipe) otherRecipe;
+                return this.GetId().Equals(newRecipe.GetId());
+            }
+        }
+
         public override int GetHashCode()
         {
-             return this.GetName().GetHashCode();
+          return this.GetName().GetHashCode();
         }
 
         public string GetName()
         {
-            return _name;
+          return _name;
         }
 
         public int GetId()
         {
-            return _id;
+          return _id;
         }
         public string GetIngredients()
         {
