@@ -1,14 +1,28 @@
 @{
   Layout = "_Layout";
 }
-
-
-<h1>Recipe Box</h1>
-<hr />
 <h2>Edit Recipe: @Model.GetName()</h2>
 <form action="/recipes/@Model.GetId()/update" method="post">
-  <label for="new-ingredients">Ingredients:</label>
-  <input type="text" name="new-ingredients" value="@Model.GetIngredients()">
-  <button type="submit">Edit</button>
+  <div class="form-group">
+    <label for="new-ingredients">Ingredients:</label>
+    <textarea class="form-control" type="text" name="new-ingredients">@Model.GetIngredients()</textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="new-instructions">Instructions:</label>
+    <textarea class="form-control" type="text" name="new-instructions">@Model.GetInstructions()</textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="new-rating">Recipe Rating (1-5)</label>
+    <select class="new-rating" name="new-rating">
+      <option value=1>1</option>
+      <option value=2>2</option>
+      <option value=3>3</option>
+      <option value=4>4</option>
+      <option value=5>5</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-warning">Edit</button>
 </form>
-<h4><a href="/">Return Home</a><h4>
+<h4><a href="/">Return to Main Page</a><h4>

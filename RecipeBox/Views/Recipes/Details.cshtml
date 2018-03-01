@@ -2,9 +2,6 @@
 @{
   Layout = "_Layout";
 }
-
-<h1>Recipe Box</h1>
-<hr>
 <h2>Recipe: @Model["selectedRecipe"].GetName()</h2>
 <hr />
 <h1>Ingredients Needed: </h1>
@@ -13,7 +10,7 @@
 <h1>Recipe Instructions: </h1>
 <h3>@Model["selectedRecipe"].GetInstructions()</h3>
 <br>
-<h1>Recipe Rating: </h1>
+<h1 >Recipe Rating: </h1>
 <h3>@Model["selectedRecipe"].GetRating()</h3>
 <hr>
 @if (@Model["recipeCategories"].Count != 0)
@@ -28,13 +25,15 @@
 }
 <h4>Add a category to this recipe:</h4>
 <form action='/recipes/@Model["selectedRecipe"].GetId()/categories/new' method='post'>
-  <label for='category-id'>Select a category</label>
-  <select id='category-id' name='category-id' type='text'>
-    @foreach (var category in @Model["allCategories"])
-    {
-      <option value='@category.GetId()'>@category.GetName()</option>
-    }
-  </select>
-  <button type='submit'>Add</button>
+  <div class="form-group">
+    <select class="form-control" id='category-id' name='category-id' type='text'>
+      @foreach (var category in @Model["allCategories"])
+      {
+        <option value='@category.GetId()'>@category.GetName()</option>
+      }
+    </select>
+  </div>
+  <button type='submit' class="btn btn-warning">Add</button>
 </form>
-<p><a href="/">Return to Main Page</a></p>
+<h4><a href='/recipes/@Model["selectedRecipe"].GetId()/update'>Update Recipe</a></h4>
+<h4><a href="/">Return to Main Page</a></h4>

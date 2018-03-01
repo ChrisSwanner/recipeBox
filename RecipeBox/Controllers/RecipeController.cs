@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using RecipeBox.Models;
 
@@ -11,7 +12,8 @@ namespace RecipeBox.Controllers
     public ActionResult Index()
     {
       List<Recipe> allRecipes = Recipe.GetAll();
-      return View(allRecipes);
+      List<Recipe> newList = allRecipes.OrderByDescending(x => x.GetRating()).ToList();
+      return View(newList);
     }
 
     [HttpGet("/recipes/new")]
@@ -69,13 +71,22 @@ namespace RecipeBox.Controllers
      {
        Dictionary<string, object> model = new Dictionary<string, object>();
        Recipe thisRecipe = Recipe.Find(id);
-       thisRecipe.Edit(Request.Form["new-ingredients"]);
+       thisRecipe.Edit(Request.Form["new-ingredients"], Request.Form["new-instructions"], Int32.Parse(Request.Form["new-rating"]));
        List<Category> recipeCategories = thisRecipe.GetCategories();
        List<Category> allCategories = Category.GetAll();
        model.Add("selectedRecipe", thisRecipe);
        model.Add("recipeCategories", recipeCategories);
        model.Add("allCategories", allCategories);
        return View("Details", model);
+     }
+
+     [HttpPost("/recipes/search-results")]
+     public ActionResult SearchByIngredient()
+     {
+       string userInput = (Request.Form["ingredient-search"]);
+       List<Recipe> searchList = Recipe.SearchByIngredient(userInput);
+       return View("SearchResults", searchList);
+
      }
   }
 }

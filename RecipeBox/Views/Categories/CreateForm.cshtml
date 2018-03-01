@@ -1,12 +1,14 @@
 @{
   Layout = "_Layout";
 }
-<h1>To Do List</h1>
 <h2>Add new category</h2>
 <hr />
 <form action="/categories" method="post">
-  <label for="category-name">Category name:</label>
-  <input id="category-name" name="category-name" type="text">
-  <button type="submit">Add</button>
+  <div class="form-group">
+    <label for="category-name">Category name:</label>
+    <input id="category-name" class="form-control" name="category-name" type="text">
+  </div>
+
+  <button type="submit" class="btn btn-warning">Add</button>
 </form>
-<h4><a href="/">Return home</a></h4>
+<h4><a href="/">Return to Main Page</a></h4>

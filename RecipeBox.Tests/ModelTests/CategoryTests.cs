@@ -121,5 +121,28 @@ namespace RecipeBox.Tests
       //Assert
       CollectionAssert.AreEqual(testList, result);
     }
+
+    [TestMethod]
+    public void SearchIngredient_FindRecipesWithIngredient_List()
+    {
+      //Arrange
+      Recipe testRecipe = new Recipe("Popplers", "Freshly laid Omikronian young", "Find fetal Omikronian, consume", 3);;
+      testRecipe.Save();
+
+      Recipe testRecipe2 = new Recipe("Diet Popplers", "Freshly laid Omikronian young", "Find fetal Omikronian, consume", 3);;
+      testRecipe2.Save();
+
+      Recipe testRecipe3 = new Recipe("Torgo's Executive Power", "BOX Delivery Network Executive", "Beat Executive to pulp, then grind into a fine powder", 5);;
+      testRecipe3.Save();
+
+      string testIngredient = "Omikronian young";
+
+      //Act
+      List<Recipe> resultList = Recipe.SearchByIngredient(testIngredient);
+      int resultCount = resultList.Count;
+
+      //Assert
+      Assert.AreEqual(resultCount, 2);
+    }
   }
 }

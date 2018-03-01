@@ -3,8 +3,8 @@
   Layout = "_Layout";
 }
 
-<h1>Recipe Box</h1>
 <h2>Category: @Model["selectedCategory"].GetName()</h2>
+<h3><a href="/categories/@Model["selectedCategory"].GetId()/delete">Delete this Category</a></h3>
 <hr />
 @if (@Model["categoryRecipes"].Count != 0)
 {
@@ -12,20 +12,21 @@
   <ul>
     @foreach (var recipe in @Model["categoryRecipes"])
     {
-      <li><a href="/recipes/@recipe.GetId()">@recipe.GetName()</a></li>
-      <p><a href="/recipes/@recipe.GetId()/delete">Delete Recipe</a></p>
+      <li><h3><a href='/recipes/@recipe.GetId()'>@recipe.GetName()</a></h3><p><a href="/recipes/@recipe.GetId()/delete">Delete Recipe</a> | <a href="/recipes/@recipe.GetId()/update">Update Recipe</a></p></li>
     }
   </ul>
 }
 <h4>Add a recipe to this category:</h4>
 <form action='/categories/@Model["selectedCategory"].GetId()/recipes/new' method='post'>
-  <label for='recipe-id'>Select a recipe</label>
-  <select id='recipe-id' name='recipe-id' type='text'>
-    @foreach (var recipe in @Model["allRecipes"])
-    {
-      <option value='@recipe.GetId()'>@recipe.GetName()</option>
-    }
-  </select>
-  <button type='submit'>Add</button>
+  <div class="form-group">
+    <select class="form-control" id='recipe-id' name='recipe-id' type='text'>
+      @foreach (var recipe in @Model["allRecipes"])
+      {
+        <option value='@recipe.GetId()'>@recipe.GetName()</option>
+      }
+    </select>
+  </div>
+
+  <button type='submit' class="btn btn-warning">Add</button>
 </form>
-<p><a href="/">Return to Main Page</a></p>
+<h4><a href="/">Return to Main Page</a></h4>

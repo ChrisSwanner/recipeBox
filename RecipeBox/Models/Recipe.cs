@@ -256,41 +256,48 @@ namespace RecipeBox.Models
             return newRecipe;
         }
 
-        // public static Recipe FindByIngredient(string ingredient)
-        // {
-        //     MySqlConnection conn = DB.Connection();
-        //     conn.Open();
-        //     var cmd = conn.CreateCommand() as MySqlCommand;
-        //     cmd.CommandText = @"SELECT * FROM recipes WHERE id = (@searchId);";
-        //
-        //     MySqlParameter searchId = new MySqlParameter();
-        //     searchId.ParameterName = "@searchId";
-        //     searchId.Value = id;
-        //     cmd.Parameters.Add(searchId);
-        //
-        //     var rdr = cmd.ExecuteReader() as MySqlDataReader;
-        //     int recipeId = 0;
-        //     string recipeName = "";
-        //     string recipeIngredients = "";
-        //     string recipeInstructions = "";
-        //     int recipeRating = 0;
-        //
-        //     while(rdr.Read())
-        //     {
-        //       recipeId = rdr.GetInt32(0);
-        //       recipeName = rdr.GetString(1);
-        //       recipeIngredients = rdr.GetString(2);
-        //       recipeInstructions = rdr.GetString(3);
-        //       recipeRating = rdr.GetInt32(4);
-        //     }
-        //     Recipe newRecipe = new Recipe(recipeName, recipeIngredients, recipeInstructions, recipeRating, recipeId);
-        //     conn.Close();
-        //     if (conn != null)
-        //     {
-        //         conn.Dispose();
-        //     }
-        //     return newRecipe;
-        // }
+        public static List<Recipe> SearchByIngredient(string userIngredient)
+        {
+            List<Recipe> allRecipes = new List<Recipe> {};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM recipes;";
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            while(rdr.Read())
+
+            {
+              int recipeId = rdr.GetInt32(0);
+              string recipeName = rdr.GetString(1);
+              string recipeIngredients = rdr.GetString(2);
+              string recipeInstructions = rdr.GetString(3);
+              int recipeRating = rdr.GetInt32(4);
+              Recipe newRecipe = new Recipe(recipeName, recipeIngredients, recipeInstructions, recipeRating, recipeId);
+              allRecipes.Add(newRecipe);
+            }
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+
+            List<Recipe> returnList = new List<Recipe> {};
+            foreach (Recipe recipe in allRecipes)
+            {
+              string recipeIngredients = recipe.GetIngredients();
+              string searchIngredients = recipeIngredients.ToUpper();
+              string upperUserIngredient = userIngredient.ToUpper();
+              if (searchIngredients.Contains(upperUserIngredient))
+              {
+                returnList.Add(recipe);
+              }
+            }
+
+            return returnList;
+
+
+        }
 
         public void Delete()
           {
@@ -312,12 +319,12 @@ namespace RecipeBox.Models
               }
           }
 
-        public void Edit(string newIngredients)
+        public void Edit(string newIngredients, string newInstructions, int newRating)
         {
           MySqlConnection conn = DB.Connection();
           conn.Open();
           var cmd = conn.CreateCommand() as MySqlCommand;
-          cmd.CommandText = @"UPDATE recipes SET ingredients = @newIngredients WHERE id = @searchId;";
+          cmd.CommandText = @"UPDATE recipes SET ingredients = @newIngredients, instructions = @newInstructions, rating = @newRating  WHERE id = @searchId;";
 
           MySqlParameter searchId = new MySqlParameter();
           searchId.ParameterName = "@searchId";
@@ -329,8 +336,20 @@ namespace RecipeBox.Models
           ingredients.Value = newIngredients;
           cmd.Parameters.Add(ingredients);
 
+          MySqlParameter instructions = new MySqlParameter();
+          instructions.ParameterName = "@newInstructions";
+          instructions.Value = newInstructions;
+          cmd.Parameters.Add(instructions);
+
+          MySqlParameter rating = new MySqlParameter();
+          rating.ParameterName = "@newRating";
+          rating.Value = newIngredients;
+          cmd.Parameters.Add(rating);
+
           cmd.ExecuteNonQuery();
           _ingredients = newIngredients;
+          _instructions = newInstructions;
+          _rating = newRating;
 
           conn.Close();
           if (conn != null)
@@ -338,5 +357,6 @@ namespace RecipeBox.Models
             conn.Dispose();
           }
         }
+
     }
 }

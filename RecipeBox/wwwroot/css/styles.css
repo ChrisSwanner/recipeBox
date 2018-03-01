@@ -7,18 +7,31 @@
    color: white;
  }
 
- .title {
-   text-align: center;
- }
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.update.form-control {
+  margin-left: auto;
+  margin-right: auto;
+}
+.title {
+ text-align: center;
+}
+
 a:hover {
   color: yellow;
 }
+
 h1, h2 {;
   color: white;
 }
+
 h2 {
   text-align: left;
-
 }
 input {
   color: black;
@@ -34,4 +47,31 @@ select {
 }
 .index-rec {
   text-align: right;
+}
+
+hr {
+    background-color: inherit;
+  	border-top: 2px dashed white;;
+}
+
+.elegantshadow {
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+  font-size: 92px;
+  padding: 80px 50px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+}
+
+.elegantshadow {
+  color: #2c2c2c;
+  background-color: inherit;
+  letter-spacing: .05em;
+  text-shadow:
+    4px 4px 0px white,
+    7px 7px 0px rgba(0, 0, 0, 0.2);
+}
+
+.form-control {
+  max-width: 300px;
 }
